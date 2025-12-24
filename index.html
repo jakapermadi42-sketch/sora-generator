@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Sora Studio by Eddy - Ultra Sultan Lite</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        /* RESET TOTAL UNTUK CLICKS */
+        * { 
+            box-sizing: border-box; 
+            -webkit-tap-highlight-color: transparent !important; 
+            outline: none !important;
+            margin: 0; padding: 0;
+            user-select: none;
+        }
+        
+        body { 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            background: #000000;
+            color: #f8fafc;
+            min-height: 100vh;
+            display: block;
+        }
+
+        /* Navigasi Statis (Bukan Fixed) agar tidak menghalangi jempol */
+        .nav-lite { 
+            background: #000000; border-bottom: 1px solid #1e293b;
+            padding: 15px 20px; display: flex; align-items: center;
+            justify-content: space-between;
+        }
+
+        /* Judul Sultan Multicolor */
+        .text-multicolor {
+            background: linear-gradient(to right, #6366f1, #fbbf24, #f43f5e, #10b981);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 900;
+        }
+
+        /* Tombol Paling Responsif */
+        .btn-lite {
+            cursor: pointer !important; 
+            touch-action: manipulation !important;
+            transition: transform 0.1s ease; 
+            width: 100%; display: block;
+            border: none;
+        }
+        .btn-lite:active { transform: scale(0.97); }
+
+        /* Arsitektur Panel Linear */
+        .panel-lite { display: none; width: 100%; padding: 20px; }
+        .panel-lite.active { display: block; }
+
+        /* Input Styles */
+        textarea, input {
+            background: #000000 !important; border: 1px solid #334155 !important;
+            color: #ffffff !important; width: 100%; border-radius: 12px;
+            padding: 16px; font-size: 14px; line-height: 1.5;
+            user-select: text !important;
+        }
+
+        .chip-lite {
+            background: #1e293b; padding: 14px; border-radius: 10px;
+            font-size: 10px; font-weight: 800; text-align: center; flex: 1; border: 1px solid transparent;
+        }
+        .chip-lite.active { background: #4f46e5; border-color: #ffffff; }
+
+        /* Script Output */
+        #script-result {
+            height: 450px; font-family: 'Courier New', monospace; font-size: 11px;
+            line-height: 1.6; background: #000000 !important; border: 1px solid #1e293b !important;
+            white-space: pre-wrap; padding: 18px; border-radius: 15px; color: #e2e8f0;
+            user-select: text !important; -webkit-user-select: text !important;
+        }
+
+        /* Toast Statis Sederhana */
+        #toast-lite {
+            display: none; background: #22c55e; color: white; padding: 12px;
+            border-radius: 10px; font-size: 11px; font-weight: 800; text-align: center;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Statis -->
+    <nav class="nav-lite">
+        <div class="flex items-center gap-3">
+            <div class="w-9 h-9 bg-indigo-600 rounded-lg flex items-center justify-center">
+                <i data-lucide="zap" class="text-white w-5 h-5"></i>
+            </div>
+            <div class="text-left">
+                <h1 class="text-[12px] font-black uppercase italic leading-none text-white tracking-tighter">Sora Studio <span class="text-indigo-400">by Eddy</span></h1>
+                <p class="text-[7px] text-slate-500 font-bold uppercase tracking-[0.15em] mt-1">Prompt Generator Iklan Sora 2</p>
+            </div>
+        </div>
+        <div id="back-container" style="display:none;">
+            <button onclick="changePage('home')" class="bg-red-600 text-white px-3 py-1.5 rounded-lg text-[9px] font-black uppercase btn-lite shadow-lg">Kembali</button>
+        </div>
+    </nav>
+
+    <!-- STEP 1: HOME -->
+    <div id="panel-home" class="panel-lite active">
+        <div class="mb-8 text-left">
+            <h2 class="text-3xl font-black italic leading-tight uppercase tracking-tighter text-multicolor">
+                PROMPT GENERATOR<br>IKLAN SORA 2
+            </h2>
+            <p class="text-slate-500 text-[10px] font-bold uppercase tracking-widest mt-2 leading-relaxed">SULTAN LITE VERSION - ULTRA FAST RESPONSE</p>
+        </div>
+
+        <div class="space-y-4">
+            <button onclick="initApp('hard_sell')" class="btn-lite">
+                <div class="bg-[#0f172a] rounded-[20px] p-5 flex items-center gap-4 text-left border border-[#1e293b] border-l-4 border-l-orange-500 shadow-xl">
+                    <i data-lucide="zap" class="text-orange-500 w-6 h-6"></i>
+                    <div><h3 class="text-sm font-black uppercase text-white">IKLAN CEPAT</h3><p class="text-[9px] text-slate-400 uppercase mt-0.5">Detail Akurat & Sultan Style</p></div>
+                </div>
+            </button>
+            <button onclick="initApp('aesthetic')" class="btn-lite">
+                <div class="bg-[#0f172a] rounded-[20px] p-5 flex items-center gap-4 text-left border border-[#1e293b] border-l-4 border-l-blue-500 shadow-xl">
+                    <i data-lucide="sparkles" class="text-blue-500 w-6 h-6"></i>
+                    <div><h3 class="text-sm font-black uppercase text-white">IKLAN HARIAN</h3><p class="text-[9px] text-slate-400 uppercase mt-0.5">Sinematik & Peragaan Mewah</p></div>
+                </div>
+            </button>
+            <button onclick="initApp('solution')" class="btn-lite">
+                <div class="bg-[#0f172a] rounded-[20px] p-5 flex items-center gap-4 text-left border border-[#1e293b] border-l-4 border-l-emerald-500 shadow-xl">
+                    <i data-lucide="check-circle" class="text-emerald-500 w-6 h-6"></i>
+                    <div><h3 class="text-sm font-black uppercase text-white">IKLAN SOLUSI</h3><p class="text-[9px] text-slate-400 uppercase mt-0.5">Tutorial Sultan & Hasil Nyata</p></div>
+                </div>
+            </button>
+            <button onclick="initApp('pov')" class="btn-lite">
+                <div class="bg-[#0f172a] rounded-[20px] p-5 flex items-center gap-4 text-left border border-[#1e293b] border-l-4 border-l-purple-500 shadow-xl">
+                    <i data-lucide="user" class="text-purple-500 w-6 h-6"></i>
+                    <div><h3 class="text-sm font-black uppercase text-white">IKLAN REVIEW</h3><p class="text-[9px] text-slate-400 uppercase mt-0.5">Bicara Akrab & Sultan Review</p></div>
+                </div>
+            </button>
+        </div>
+
+        <button onclick="changePage('help')" class="btn-lite py-5 bg-slate-900 border border-slate-800 rounded-2xl flex items-center justify-center gap-2 text-[10px] font-black uppercase text-slate-400 mt-8 shadow-2xl">
+            <i data-lucide="book-open" class="w-4 h-4 text-indigo-400"></i> PANDUAN ULTRA SULTAN
+        </button>
+    </div>
+
+    <!-- STEP 2: INPUT -->
+    <div id="panel-form" class="panel-lite">
+        <div class="space-y-6">
+            <div class="p-6 bg-[#0f172a] rounded-2xl border border-white/5 shadow-xl">
+                <label class="text-[10px] font-bold text-indigo-400 uppercase tracking-widest block mb-4 text-left">UPLOAD FOTO PRODUK</label>
+                <div onclick="document.getElementById('file-in').click()" class="btn-lite h-44 border-2 border-dashed border-slate-700 rounded-2xl flex flex-col items-center justify-center bg-black overflow-hidden relative">
+                    <img id="p-prev" class="hidden h-full w-full object-contain">
+                    <div id="p-hint" class="text-center opacity-30">
+                        <i data-lucide="camera" class="w-8 h-8 mx-auto mb-3"></i>
+                        <p class="text-[9px] font-bold uppercase">Analisis Visual Sultan AI</p>
+                    </div>
+                    <input type="file" id="file-in" class="hidden" accept="image/*" onchange="handleFile(this)">
+                </div>
+            </div>
+
+            <div class="p-6 bg-[#0f172a] rounded-2xl border border-white/5 space-y-4">
+                <label class="text-[10px] font-bold text-indigo-400 uppercase tracking-widest block text-left">NAMA PRODUK & DURASI</label>
+                <input type="text" id="inp-name" placeholder="Ketik nama produk...">
+                <div class="flex gap-2">
+                    <button onclick="setDur(10, this)" class="chip-lite btn-lite">10 DETIK</button>
+                    <button onclick="setDur(15, this)" class="chip-lite active btn-lite">15 DETIK</button>
+                </div>
+            </div>
+
+            <div class="p-6 bg-[#0f172a] rounded-2xl border border-white/5">
+                <label class="text-[10px] font-bold text-indigo-400 uppercase tracking-widest block mb-4 text-left">KEUNGGULAN (BARIS BARU)</label>
+                <textarea id="inp-feats" rows="3" placeholder="Tulis tiap poin sultan..."></textarea>
+            </div>
+
+            <div class="p-6 bg-[#0f172a] rounded-2xl border border-white/5 space-y-4">
+                <label class="text-[10px] font-bold text-indigo-400 uppercase tracking-widest block text-left">PROMO (KOSONGKAN JIKA TIDAK ADA)</label>
+                <div class="grid grid-cols-2 gap-2">
+                    <button onclick="setPr('DISKON 50%', this)" class="chip-lite btn-lite p-btn">Diskon 50%</button>
+                    <button onclick="setPr('BELI 1 GRATIS 1', this)" class="chip-lite btn-lite p-btn">Beli 1 Gratis 1</button>
+                </div>
+                <input type="text" id="inp-promo-custom" placeholder="Ketik promo sultan custom...">
+            </div>
+
+            <button onclick="runGenerate()" class="btn-lite py-6 rounded-2xl bg-indigo-600 text-white uppercase text-[12px] font-black tracking-[0.2em] shadow-2xl">GENERATE AD PROMPT</button>
+        </div>
+    </div>
+
+    <!-- STEP 3: RESULT -->
+    <div id="panel-result" class="panel-lite">
+        <div class="bg-[#0f172a] rounded-2xl border border-indigo-500/20 overflow-hidden shadow-2xl">
+            <div class="px-5 py-4 border-b border-slate-800 bg-black/40 text-left">
+                <span class="text-[10px] font-bold uppercase text-indigo-400 italic">Sora_Studio_by_Eddy_Sultan_Lite.txt</span>
+            </div>
+            <div class="p-4">
+                <textarea id="script-result" readonly></textarea>
+                <div id="toast-lite">Tersalin ke Clipboard!</div>
+            </div>
+            <div class="p-5 space-y-4">
+                <button onclick="copyToClip()" class="btn-lite py-5 rounded-2xl bg-indigo-600 text-white text-[12px] font-black uppercase flex items-center justify-center gap-3 shadow-xl">
+                    <i data-lucide="copy" class="w-5 h-5"></i> SALIN NASKAH
+                </button>
+                <div class="flex gap-3">
+                    <button onclick="runGenerate()" class="btn-lite flex-1 py-4 bg-slate-800 rounded-xl text-[10px] font-bold uppercase">Refresh</button>
+                    <button onclick="changePage('home')" class="btn-lite flex-1 py-4 bg-slate-800 rounded-xl text-[10px] font-bold uppercase">Ulangi</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- LOADER (Bukan Overlay) -->
+    <div id="panel-loader" class="panel-lite">
+        <div class="flex flex-col items-center justify-center py-32">
+            <div class="w-16 h-16 border-4 border-indigo-600 border-t-transparent rounded-full animate-spin mb-8"></div>
+            <p class="text-[10px] font-black uppercase tracking-[0.2em] text-indigo-400 italic text-center">Analisis Sultan By Eddy...</p>
+        </div>
+    </div>
+
+    <!-- HELP (Bukan Overlay) -->
+    <div id="panel-help" class="panel-lite">
+        <div class="bg-[#0f172a] border border-slate-700 rounded-3xl p-8 text-left shadow-2xl relative">
+            <h3 class="text-xl font-black uppercase text-indigo-400 mb-6 border-b border-slate-800 pb-3 italic text-center">Sora Studio Sultan Guide</h3>
+            <div class="space-y-6 text-[11px] text-slate-300 leading-relaxed">
+                <div>
+                    <h4 class="text-white font-bold mb-1 uppercase tracking-tighter">1. Kebijakan Produk</h4>
+                    <p>AI akan otomatis mendeteksi. Pakaian digantung (tidak dipakai). Shampoo diperagakan aktif (mencuci).</p>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold mb-1 uppercase tracking-tighter">2. Naskah Berwarna</h4>
+                    <p>Teks layar muncul di setiap adegan dengan instruksi warna mewah dan kamera Multi-Angle.</p>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold mb-1 uppercase tracking-tighter">3. Eksekusi</h4>
+                    <p>Gunakan foto asli di <strong>Reference Image</strong> Sora dan naskah hasil generate di kolom <strong>Prompt</strong>.</p>
+                </div>
+            </div>
+            <button onclick="changePage('home')" class="btn-lite py-4 bg-indigo-600 text-white rounded-xl font-black uppercase text-[10px] mt-8 shadow-xl">Tutup Panduan</button>
+        </div>
+    </div>
+
+    <script>
+        lucide.createIcons();
+        const apiKey = ""; 
+        let store = { style: 'aesthetic', dur: 15, promo: '', file: null };
+
+        // NAVIGATION: Pure linear switching, no refresh, no overlaps
+        function changePage(p) {
+            document.querySelectorAll('.panel-lite').forEach(panel => panel.classList.remove('active'));
+            document.getElementById('panel-' + p).classList.add('active');
+            
+            const backBtn = document.getElementById('back-container');
+            if(p === 'home' || p === 'loader' || p === 'help') backBtn.style.display = 'none';
+            else backBtn.style.display = 'block';
+            window.scrollTo(0,0);
+        }
+
+        function initApp(s) {
+            store.style = s;
+            changePage('form');
+        }
+
+        function handleFile(input) {
+            const f = input.files[0];
+            if (!f) return;
+            store.file = f;
+            const r = new FileReader();
+            r.onload = e => {
+                document.getElementById('p-prev').src = e.target.result;
+                document.getElementById('p-prev').classList.remove('hidden');
+                document.getElementById('p-hint').classList.add('hidden');
+            };
+            r.readAsDataURL(f);
+        }
+
+        function setDur(v, el) {
+            store.dur = v;
+            el.parentElement.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+            el.classList.add('active');
+        }
+
+        function setPr(v, el) {
+            const active = el.classList.contains('active');
+            document.querySelectorAll('.p-btn').forEach(b => b.classList.remove('active'));
+            if(active) store.promo = '';
+            else { store.promo = v; el.classList.add('active'); }
+        }
+
+        async function runGenerate() {
+            const name = document.getElementById('inp-name').value;
+            if(!name || !store.file) { alert("Upload Foto & Nama Produk!"); return; }
+            
+            changePage('loader');
+
+            const r = new FileReader();
+            r.onload = async (ev) => {
+                try {
+                    const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ contents: [{ parts: [{ text: `Identify product type (clothing, wash, or other). JSON ONLY: { "type": "clothing/wash/other", "loc": "studio" }` }, { inlineData: { mimeType: "image/png", data: ev.target.result.split(',')[1] } }] }] })
+                    });
+                    const d = await res.json();
+                    const ana = JSON.parse(d.candidates[0].content.parts[0].text);
+                    buildScript(name, ana);
+                } catch (e) { buildScript(name, { type: 'other', loc: 'Luxury Studio' }); }
+                changePage('result');
+            };
+            r.readAsDataURL(store.file);
+        }
+
+        function buildScript(n, ana) {
+            const feats = document.getElementById('inp-feats').value.split('\n').filter(l => l.trim() !== "");
+            const pr = document.getElementById('inp-promo-custom').value.trim() || store.promo;
+            const BANK = {
+                hard_sell: ["Segera miliki sultan kualitas terbaik ini!", "Kesempatan terbatas untuk Anda hari ini."],
+                aesthetic: ["Sempurnakan setiap momen sultan Anda.", "Kecantikan abadi desain eksklusif."],
+                solution: ["Jawaban nyata kebutuhan sultan Anda.", "Hasil instan mengubah rutinitas sultan."],
+                pov: ["Jujur, saya sangat terkesan kualitas ini.", "Pas banget untuk sultan aktivitas padat."]
+            };
+            const colP = ["Vibrant Gold", "Crystal White", "Neon Blue", "Rosewood Pink", "Emerald Pearl"];
+            const camP = ["Dynamic Orbit Tracking", "Macro Zoom", "Low-angle Cinematic", "Slider Tracking"];
+            
+            let res = "";
+            const total = Math.ceil(store.dur / 3);
+
+            for(let i=0; i<total; i++) {
+                const s = i * 3;
+                const e = Math.min((i + 1) * 3, store.dur);
+                const time = `[00:${s < 10 ? '0'+s : s} - 00:${e < 10 ? '0'+e : e}]`;
+                const col = colP[i % 5];
+                const cam = camP[i % 4];
+                const sp = BANK[store.style][i % 2];
+
+                let act = (ana.type === 'clothing') ? `Character is NOT wearing the ${n}. Instead, it is displayed on a premium gold hanger. Character stands beside it using gestures to explain fabric.` : 
+                          (ana.type === 'wash') ? `Character is actively using ${n} to wash their hair/hands, showing rich lather focus and massaging scalp.` : 
+                          `Character performs professional physical demonstration of ${n} highlighting sultan quality and build.`;
+
+                if (i === 0) {
+                    res += `[00:00 - 00:02]\nCAMERA : SPLIT-SCREEN (Vertical Mid-Split)\nACTION : Left: Character smiles and speaks. Right: Macro detail of ${n}.\nSPEECH : 'Halo sultan! Lihat detail sempurna dari ${n} ini.'\nTEXT   : [${col}] "${n.toUpperCase()}"\n\n`;
+                } else if (i === total - 1) {
+                    const clSp = pr ? `Segera dapatkan ${pr} sultan ini sekarang juga!` : `Segera miliki kualitas sultan terbaik ini melalui link belanja kami!`;
+                    const clTx = pr ? `CHECKOUT SEKARANG | ${pr}` : `CHECKOUT SEKARANG | ${n.toUpperCase()}`;
+                    res += `${time}\nCAMERA : Wide Cinematic Hero Shot\nACTION : Character proudly presents ${n} and strikes a pose.\nSPEECH : '${clSp}'\nTEXT   : [Vibrant Gold] "${clTx}"\n\n`;
+                } else {
+                    const txt = feats.length > 0 ? feats[(i-1) % feats.length].toUpperCase() : n.toUpperCase();
+                    res += `${time}\nCAMERA : ${cam}\nACTION : ${act}\nSPEECH : '${sp}'\nTEXT   : [${col}] "${txt}"\n\n`;
+                }
+            }
+            document.getElementById('script-result').value = res.trim();
+        }
+
+        function copyToClip() {
+            const a = document.getElementById('script-result');
+            a.select(); document.execCommand('copy');
+            const t = document.getElementById('toast-lite');
+            t.style.display = 'block';
+            setTimeout(() => { t.style.display = 'none'; }, 2000);
+        }
+    </script>
+</body>
+</html>
+
